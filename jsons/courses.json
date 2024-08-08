@@ -1,0 +1,44 @@
+{
+  "completedCourses": [
+    {
+      "name": "OpenCV 201",
+      "platform": "Turkcell Geleceği Yazanlar",
+      "startDate": null,
+      "endDate": "05-08-2024",
+      "certificateUrl": "https://media.licdn.com/dms/image/D4D2DAQGUQ32HMWx6KQ/profile-treasury-document-images_800/1/1722844868199?e=1723680000&v=beta&t=vLltiYh_zRzpo5XfjiOGvBH34FDnxpxs8FIkdRjlPuA"
+    },
+
+    {
+      "name": "Python Programlama 201",
+      "platform": "Turkcell Geleceği Yazanlar",
+      "startDate": null,
+      "endDate": "05-08-2024",
+      "certificateUrl": "https://media.licdn.com/dms/image/D4D2DAQGUQ32HMWx6KQ/profile-treasury-document-images_800/1/1722844868199?e=1723680000&v=beta&t=vLltiYh_zRzpo5XfjiOGvBH34FDnxpxs8FIkdRjlPuA"
+    },
+
+    {
+      "name": "Python Programlama 101",
+      "platform": "Turkcell Geleceği Yazanlar",
+      "startDate": null,
+      "endDate": "05-08-2024",
+      "certificateUrl": "https://media.licdn.com/dms/image/D4D2DAQGUQ32HMWx6KQ/profile-treasury-document-images_800/1/1722844868199?e=1723680000&v=beta&t=vLltiYh_zRzpo5XfjiOGvBH34FDnxpxs8FIkdRjlPuA"
+    },
+
+    {
+      "name": "Bilgisayar Destekli 3 Boyutlu Tasarım (SolidWorks)",
+      "platform": "Elginkan Vakfı",
+      "startDate": "22-01-2024",
+      "endDate": "27-02-2024",
+      "certificateUrl": "https://media.licdn.com/dms/image/D4D2DAQGUQ32HMWx6KQ/profile-treasury-document-images_800/1/1722844868199?e=1723680000&v=beta&t=vLltiYh_zRzpo5XfjiOGvBH34FDnxpxs8FIkdRjlPuA"
+    }
+  ],
+  "ongoingCourses": [
+    {
+      "name": "Machine Learning Specialization",
+      "platform": "Coursera",
+      "startDate": "01-08-2024",
+      "endDate": null,
+      "completion": 20
+    }
+  ]
+}

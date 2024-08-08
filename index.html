@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atakan Karaçengel</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="brand-container">
+        <a class="brand" href="#" id="brand" onclick="event.preventDefault()"
+          >Atakan Karaçengel</a
+        >
+      </div>
+      <div class="links">
+        <button onclick="showSection('resume')">Özgeçmiş</button>
+        <button onclick="showSection('courses')">Eğitimlerim</button>
+        <button onclick="showSection('portfolio')">Portfolyo</button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="my-profile">
+        <img id="profile-picture" src="" alt="Profile Picture" />
+        <h2 class="my-name" id="name"></h2>
+        <p class="short-desc" id="about"></p>
+        <div class="contact-info">
+          <div class="contact-info-inside">
+            <p>
+              <i class="fas fa-map-marker-alt"></i><span id="location"></span>
+            </p>
+            <p>
+              <i class="fas fa-university"></i><span id="university"></span>
+            </p>
+            <p>
+              <i class="fas fa-envelope"></i><a id="email" href="">Email</a>
+            </p>
+            <p>
+              <i class="fas fa-graduation-cap"></i
+              ><a id="googleScholar" href="" target="_blank">Google Scholar</a>
+            </p>
+            <p>
+              <i class="fab fa-instagram"></i
+              ><a id="instagram" href="" target="_blank">Instagram</a>
+            </p>
+            <p>
+              <i class="fab fa-linkedin"></i
+              ><a id="linkedin" href="" target="_blank">LinkedIn</a>
+            </p>
+            <p>
+              <i class="fab fa-twitter"></i
+              ><a id="twitter" href="" target="_blank">X (formerly Twitter)</a>
+            </p>
+            <p>
+              <i class="fab fa-github"></i
+              ><a id="github" href="" target="_blank">GitHub</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="automatic-content" id="resume">
+        <div class="print-icon-container">
+          <h2>Özgeçmiş</h2>
+          <button class="print-icon" onclick="window.print()">
+            <i class="fas fa-print"></i> Yazdır
+          </button>
+        </div>
+        <!-- Dynamic content here -->
+      </div>
+      <div class="automatic-content hidden" id="courses">
+        <!-- Dynamic content here -->
+      </div>
+      <div class="automatic-content hidden" id="portfolio">
+        <!-- Dynamic content here -->
+      </div>
+    </div>
+    <div class="footer">
+      <p>
+        &copy; <span id="year"></span>
+        <a href="https://github.com/atakankaracengel/" target="_blank"
+          >Atakan Karaçengel</a
+        >
+        tarafından yapıldı.
+      </p>
+    </div>
+
+    <!-- Lightbox elements -->
+    <div class="lightbox" id="lightbox">
+      <span class="close" id="lightbox-close">&times;</span>
+      <span class="prev" id="lightbox-prev">&#10094;</span>
+      <img id="lightbox-img" src="" alt="Lightbox Image" />
+      <span class="next" id="lightbox-next">&#10095;</span>
+      <div class="counter" id="lightbox-counter"></div>
+    </div>
+
+    <script src="js/my-info.js"></script>
+    <script src="js/portfolio.js"></script>
+    <script src="js/resume.js"></script>
+    <script src="js/courses.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const footerText = document.getElementById("year");
+        const currentYear = new Date().getFullYear();
+        footerText.textContent = currentYear;
+        document.getElementById("brand").addEventListener("click", () => {
+          showSection("resume");
+        });
+        showSection("resume");
+      });
+
+      function showSection(sectionId) {
+        document.querySelectorAll(".automatic-content").forEach((section) => {
+          section.classList.add("hidden");
+        });
+        document.getElementById(sectionId).classList.remove("hidden");
+        document.querySelectorAll(".navbar button").forEach((button) => {
+          button.classList.remove("active");
+        });
+        const activeButton = Array.from(
+          document.querySelectorAll(".navbar button")
+        ).find((button) =>
+          button.textContent.includes(
+            sectionId === "resume"
+              ? "Özgeçmiş"
+              : sectionId === "courses"
+              ? "Eğitimlerim"
+              : "Portfolyo"
+          )
+        );
+        if (activeButton) {
+          activeButton.classList.add("active");
+        }
+      }
+    </script>
+  </body>
+</html>

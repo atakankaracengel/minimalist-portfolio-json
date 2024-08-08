@@ -1,0 +1,654 @@
+html,
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px; /* Yatay kaydırma çubuğu için */
+}
+
+/* Kaydırma çubuğu rayı */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track rengi */
+  border-radius: 10px; /* Köşeleri yuvarlat */
+}
+
+/* Kaydırma çubuğu tutamağı */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Tutamaç rengi */
+  border-radius: 10px; /* Köşeleri yuvarlat */
+}
+
+/* Kaydırma çubuğu tutamağı üzerine gelindiğinde */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Tutamaç hover rengi */
+}
+
+.navbar {
+  display: flex;
+  background-color: white;
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.navbar .brand-container {
+  flex: 0 0 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #ccc;
+}
+
+.navbar .brand {
+  font-weight: 400;
+  color: #777;
+  text-decoration: none;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.navbar .brand::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #777;
+  transition: width 0.3s ease, background 0.3s ease;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+}
+
+.navbar .brand:hover {
+  color: #333;
+}
+
+.navbar .brand:hover::after {
+  width: 100%;
+  background: #333;
+}
+
+.navbar .links {
+  flex: 0 0 80%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  padding-left: 20px;
+}
+
+.navbar button {
+  background: none;
+  border: none;
+  color: #333;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s;
+  font-size: 1rem;
+}
+
+.navbar button::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #333;
+  transition: width 0.3s ease, background 0.3s ease;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+}
+
+.navbar button:hover {
+  color: #000;
+}
+
+.navbar button:hover::after {
+  width: 100%;
+  background: #000;
+}
+
+.navbar button.active {
+  color: #000;
+  font-weight: bold;
+}
+
+.navbar button.active::after {
+  width: 100%;
+  background: #000;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  margin: 20px;
+  box-sizing: border-box;
+  min-height: 1000px;
+  max-height: auto;
+}
+
+.my-profile {
+  flex: 0 0 20%;
+  text-align: center;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 80px;
+  align-self: flex-start;
+  min-height: 700px;
+  max-height: auto;
+}
+
+.my-profile img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.my-name {
+  font-size: 1.25rem;
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+.short-desc {
+  font-size: 0.875rem;
+  color: #555;
+  margin-top: 0;
+  text-align: center;
+  margin-right: 20px;
+}
+
+.contact-info {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.contact-info p {
+  margin: 0.5rem 0;
+  font-size: 0.875rem;
+  color: #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-info a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.3s;
+}
+
+.contact-info a:hover {
+  color: #000;
+}
+
+.contact-info i {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.automatic-content {
+  flex: 0 0 80%;
+  text-align: left;
+  border-left: 1px solid #ccc;
+  padding-left: 20px;
+  padding-right: 50px; /* Add this line */
+  max-width: auto;
+  margin-right: auto;
+  overflow-y: hidden;
+  box-sizing: border-box;
+}
+
+.hidden {
+  display: none;
+}
+
+.footer {
+  background-color: #f1f1f1;
+  text-align: left;
+  padding: 1rem 0;
+  border-top: 1px solid #ccc;
+  margin-top: auto;
+  padding-left: calc(20% + 20px);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.footer a {
+  color: #555;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.3s;
+}
+
+.footer a:hover {
+  color: #555;
+}
+
+.progress-bar {
+  width: 100%;
+  max-width: 300px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-bar-inner {
+  height: 1rem;
+  background-color: #4caf50;
+  border-radius: 5px;
+  text-align: right;
+  padding-right: 5px;
+  color: white;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.course-dates {
+  font-size: 0.75rem;
+  color: #777;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.skills-info {
+  color: #aaa;
+  font-size: 0.75rem;
+  display: block;
+}
+
+.certificate-container {
+  margin-top: 10px;
+}
+
+.certificate-preview {
+  display: none;
+  width: 50%;
+  max-width: 50%;
+  margin-top: 10px;
+}
+
+.certificate-preview iframe {
+  width: 804px;
+  max-width: auto;
+  height: 578px;
+  border: none;
+}
+
+.date-info {
+  color: #aaa;
+  font-size: 0.75rem;
+  display: inline;
+  margin-left: 0.5rem;
+}
+
+.course-text {
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.3s, text-decoration 0.3s;
+}
+
+.course-text:hover {
+  color: #add8e6;
+  text-decoration: none;
+}
+
+.course-text.active {
+  color: #add8e6;
+  text-decoration: none;
+}
+
+.skill-bar-container {
+  margin-top: 10px;
+}
+
+.skill-bar {
+  width: 100%;
+  max-width: 200px; /* Genişliği küçülttük */
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.skill-bar-inner {
+  height: 1rem;
+  background-color: #4caf50;
+  border-radius: 5px;
+  text-align: right;
+  padding-right: 5px;
+  color: white;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+h3 {
+  margin-bottom: 0px; /* Başlığın altındaki boşluğu azaltır */
+}
+
+.skills-section {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.skills-column {
+  flex: 0 0 25%; /* Genişlikleri %32 yaparak üç sütun sığdırırız */
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .skills-column {
+    flex: 0 0 100%; /* Genişliği %100 yaparak sütunları alt alta diziyoruz */
+    margin-bottom: 10px;
+  }
+}
+
+.content {
+  max-width: auto;
+}
+
+.print-icon-container {
+  display: flex; /* Flexbox kullanarak hizalama yapar */
+  justify-content: space-between; /* Alanı eşit şekilde böler */
+  align-items: center; /* Dikeyde ortalar */
+  margin-bottom: 10px;
+}
+
+.print-icon {
+  background: none;
+  border: none;
+  color: #333;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.3s, transform 0.3s; /* transform eklendi */
+}
+
+.print-icon:hover {
+  color: #000;
+  transform: scale(1.1); /* Hover durumunda büyüme efekti */
+}
+
+.print-icon i {
+  margin-right: 5px;
+}
+
+@media print {
+  body {
+    overflow-y: visible; /* Yazdırma sırasında dikey kaydırmayı gizler */
+  }
+  .automatic-content {
+    overflow-y: visible !important; /* Yazdırma sırasında dikey kaydırmayı gizler */
+  }
+
+  body * {
+    visibility: hidden;
+  }
+  .print-icon-container {
+    display: none;
+  }
+  .my-profile,
+  .my-profile *,
+  #resume,
+  #resume * {
+    visibility: visible;
+  }
+  .my-profile {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 30%; /* %30 genişlik */
+    box-sizing: border-box;
+    text-align: center; /* İçeriği ortalar */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* İçeriği dikey olarak ortalar */
+    margin: 0; /* Marjinleri sıfırla */
+  }
+
+  .short-desc {
+    text-align: center;
+    margin: 0;
+  }
+
+  #resume {
+    position: absolute;
+    left: 30%; /* %70 genişlik */
+    top: 0;
+    width: 70%;
+    box-sizing: border-box;
+  }
+  .skills-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .skills-column {
+    flex: 0 0 32%;
+  }
+  .skill-bar {
+    display: block;
+    border: 1px solid #ccc;
+    width: 100px; /* Skill bar genişliği küçültüldü */
+  }
+  .skill-bar-inner {
+    display: block;
+    background-color: #7a7c7a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .skills-section {
+    font-size: 0.75rem;
+  }
+  #resume h2,
+  #resume h3,
+  #resume h4,
+  .my-name {
+    font-size: 1rem;
+  }
+  #resume p,
+  #resume ul,
+  #resume li {
+    font-size: 0.75rem;
+  }
+  .skill-bar-container {
+    display: block;
+  }
+
+  /* FOOTER KISMI */
+  footer,
+  .footer * {
+    visibility: visible;
+  }
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 30%; /* Footer, resume kısmının altında olmalı */
+    width: 70%; /* Resume genişliğine eşit */
+    box-sizing: border-box;
+    padding: 1rem 0;
+    background-color: #f1f1f1;
+    border-top: 1px solid #ccc;
+  }
+}
+
+.portfolio-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-start;
+  margin-bottom: 50px;
+  margin-top: 20px;
+}
+
+.portfolio-item {
+  width: 256px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f9f9f9;
+  text-align: center;
+  padding: 8px;
+  transition: transform 0.3s;
+  transform-origin: center center;
+}
+
+.portfolio-item:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+}
+
+.portfolio-item img {
+  width: 100%;
+  height: 256px;
+  object-fit: cover;
+}
+
+.portfolio-item h3 {
+  font-size: 18px;
+  margin: 8px 0;
+}
+
+.portfolio-item p {
+  font-size: 14px;
+  color: #555;
+}
+
+.portfolio-item a,
+.back-button {
+  display: inline-block;
+  margin-top: 8px;
+  color: #007bff;
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
+.portfolio-item a:hover,
+.back-button:hover {
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.detail-view {
+  padding: 16px;
+}
+
+.detail-view .images {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.detail-view img {
+  max-width: 20%;
+  height: auto;
+  width: calc(
+    100% / 3 - 16px
+  ); /* Adjust width to fit 3 images in a row with gap */
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+/* Lightbox styles */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 80%;
+  margin: auto;
+}
+
+.lightbox .prev,
+.lightbox .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+}
+
+.lightbox .prev {
+  left: 5%;
+}
+
+.lightbox .next {
+  right: 5%;
+}
+
+.lightbox .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+}
+
+.lightbox .counter {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
+  color: white;
+}

@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON Düzenleyici Aracı</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f4f4f4;
+        color: #333;
+      }
+      h1 {
+        text-align: center;
+        color: #4caf50;
+      }
+      .section {
+        margin-bottom: 20px;
+        background: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .section h3 {
+        margin-bottom: 10px;
+        color: #4caf50;
+      }
+      .section button,
+      .section input[type="file"] {
+        margin-top: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .section button:hover,
+      .section input[type="file"]:hover {
+        background-color: #45a049;
+      }
+      .entry {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #f9f9f9;
+      }
+      .entry input,
+      .entry select,
+      .entry textarea {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        display: block;
+      }
+      .entry button {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .entry button:hover {
+        background-color: #c0392b;
+      }
+      textarea {
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      select {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        display: block;
+      }
+      #portfolioHtmlDescription {
+        height: 200px;
+      }
+    </style>
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>JSON Düzenleyici Aracı</h1>
+
+    <div class="section">
+      <h3>JSON Türünü Seç</h3>
+      <select id="jsonTypeSelect">
+        <option value="my-info">Kişisel Bilgiler</option>
+        <option value="resume">Özgeçmiş</option>
+        <option value="courses">Kurslar</option>
+        <option value="portfolio">Portföy</option>
+      </select>
+    </div>
+
+    <div class="section" id="bio-section">
+      <h3>Özgeçmiş</h3>
+      <textarea id="bio"></textarea>
+    </div>
+
+    <div class="section" id="profile-section">
+      <h3>Profil Bilgileri</h3>
+      <div class="entry">
+        <input type="text" id="profilePicture" placeholder="Profil Resmi URL" />
+        <input type="text" id="name" placeholder="İsim" />
+        <textarea id="about" placeholder="Hakkında"></textarea>
+        <input type="text" id="location" placeholder="Konum" />
+        <input type="text" id="university" placeholder="Üniversite" />
+        <input type="email" id="email" placeholder="E-posta" />
+        <input type="text" id="googleScholar" placeholder="Google Scholar" />
+        <input type="text" id="instagram" placeholder="Instagram" />
+        <input type="text" id="linkedin" placeholder="LinkedIn" />
+        <input type="text" id="twitter" placeholder="Twitter" />
+        <input type="text" id="github" placeholder="GitHub" />
+      </div>
+    </div>
+
+    <div class="section" id="education-section">
+      <h3>Eğitim</h3>
+      <div id="education-container"></div>
+      <button onclick="addEducation()">Eğitim Ekle</button>
+    </div>
+
+    <div class="section" id="work-section">
+      <h3>İş Deneyimi</h3>
+      <div id="work-container"></div>
+      <button onclick="addWork()">İş Deneyimi Ekle</button>
+    </div>
+
+    <div class="section" id="skills-section">
+      <h3>Yetenekler</h3>
+      <div id="skills-container"></div>
+      <button onclick="addSkill()">Yetenek Ekle</button>
+    </div>
+
+    <div class="section" id="courses-section">
+      <h3>Tamamlanan Kurslar</h3>
+      <div id="completedCourses-container"></div>
+      <button onclick="addCompletedCourse()">Tamamlanan Kurs Ekle</button>
+      <h3>Devam Eden Kurslar</h3>
+      <div id="ongoingCourses-container"></div>
+      <button onclick="addOngoingCourse()">Devam Eden Kurs Ekle</button>
+    </div>
+
+    <div class="section" id="portfolio-section">
+      <h3>Portföy</h3>
+      <div class="entry">
+        <input type="text" id="portfolioTitle" placeholder="Başlık" />
+        <input type="text" id="coverImage" placeholder="Kapak Resmi URL" />
+        <textarea id="portfolioDescription" placeholder="Açıklama"></textarea>
+        <div id="portfolioHtmlDescription"></div>
+        <div id="portfolioImages-container"></div>
+        <button onclick="addPortfolioImage()">Resim Ekle</button>
+      </div>
+    </div>
+
+    <button onclick="generateJSON()">JSON Oluştur</button>
+
+    <div class="section" id="output-section">
+      <h3>Oluşturulan JSON</h3>
+      <textarea id="output"></textarea>
+    </div>
+
+    <div class="section" id="import-section">
+      <h3>JSON Yükle</h3>
+      <input type="file" id="file-input" accept=".json" />
+    </div>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script>
+      document
+        .getElementById("file-input")
+        .addEventListener("change", function (event) {
+          const file = event.target.files[0];
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const content = e.target.result;
+            loadJSON(JSON.parse(content));
+          };
+          reader.readAsText(file);
+        });
+
+      document
+        .getElementById("jsonTypeSelect")
+        .addEventListener("change", function () {
+          const selectedType = this.value;
+          document.getElementById("bio-section").style.display =
+            selectedType === "resume" ? "block" : "none";
+          document.getElementById("profile-section").style.display =
+            selectedType === "my-info" ? "block" : "none";
+          document.getElementById("education-section").style.display =
+            selectedType === "resume" ? "block" : "none";
+          document.getElementById("work-section").style.display =
+            selectedType === "resume" ? "block" : "none";
+          document.getElementById("skills-section").style.display =
+            selectedType === "resume" ? "block" : "none";
+          document.getElementById("courses-section").style.display =
+            selectedType === "courses" ? "block" : "none";
+          document.getElementById("portfolio-section").style.display =
+            selectedType === "portfolio" ? "block" : "none";
+        });
+
+      function loadJSON(data) {
+        const jsonType = document.getElementById("jsonTypeSelect").value;
+
+        if (jsonType === "resume") {
+          document.getElementById("bio").value = data.bio || "";
+
+          const educationContainer = document.getElementById(
+            "education-container"
+          );
+          educationContainer.innerHTML = "";
+          data.education.forEach((edu) => {
+            const educationDiv = document.createElement("div");
+            educationDiv.className = "entry";
+            educationDiv.innerHTML = `
+            <input type="text" placeholder="Derece" class="education-degree" value="${
+              edu.degree || ""
+            }">
+            <input type="text" placeholder="Kurum" class="education-institution" value="${
+              edu.institution || ""
+            }">
+            <input type="text" placeholder="Başlangıç Yılı" class="education-startYear" value="${
+              edu.startYear || ""
+            }">
+            <input type="text" placeholder="Bitiş Yılı" class="education-endYear" value="${
+              edu.endYear || ""
+            }">
+            <input type="text" placeholder="Yetenekler (virgülle ayrılmış)" class="education-skills" value="${(
+              edu.skills || []
+            ).join(", ")}">
+            <button onclick="removeEntry(this)">Kaldır</button>
+          `;
+            educationContainer.appendChild(educationDiv);
+          });
+
+          const workContainer = document.getElementById("work-container");
+          workContainer.innerHTML = "";
+          data.workExperience.forEach((job) => {
+            const workDiv = document.createElement("div");
+            workDiv.className = "entry";
+            workDiv.innerHTML = `
+            <input type="text" placeholder="Pozisyon" class="work-position" value="${
+              job.position || ""
+            }">
+            <input type="text" placeholder="Şirket" class="work-company" value="${
+              job.company || ""
+            }">
+            <input type="text" placeholder="Başlangıç Tarihi" class="work-startDate" value="${
+              job.startDate || ""
+            }">
+            <input type="text" placeholder="Bitiş Tarihi" class="work-endDate" value="${
+              job.endDate || ""
+            }">
+            <input type="text" placeholder="Yetenekler (virgülle ayrılmış)" class="work-skills" value="${(
+              job.skills || []
+            ).join(", ")}">
+            <button onclick="removeEntry(this)">Kaldır</button>
+          `;
+            workContainer.appendChild(workDiv);
+          });
+
+          const skillsContainer = document.getElementById("skills-container");
+          skillsContainer.innerHTML = "";
+          Object.keys(data.skills).forEach((category) => {
+            data.skills[category].forEach((skill) => {
+              const skillDiv = document.createElement("div");
+              skillDiv.className = "entry";
+              skillDiv.innerHTML = `
+              <input type="text" placeholder="Yetenek Adı" class="skill-name" value="${
+                skill.name || ""
+              }">
+              <input type="number" placeholder="Yetenek Seviyesi" class="skill-level" value="${
+                skill.level || ""
+              }">
+              <select class="skill-category">
+                <option value="Yazılım Dilleri" ${
+                  category === "Yazılım Dilleri" ? "selected" : ""
+                }>Yazılım Dilleri</option>
+                <option value="Programlar" ${
+                  category === "Programlar" ? "selected" : ""
+                }>Programlar</option>
+                <option value="Diğer Yetenekler" ${
+                  category === "Diğer Yetenekler" ? "selected" : ""
+                }>Diğer Yetenekler</option>
+              </select>
+              <button onclick="removeEntry(this)">Kaldır</button>
+            `;
+              skillsContainer.appendChild(skillDiv);
+            });
+          });
+        } else if (jsonType === "my-info") {
+          document.getElementById("profilePicture").value =
+            data.profilePicture || "";
+          document.getElementById("name").value = data.name || "";
+          document.getElementById("about").value = data.about || "";
+          document.getElementById("location").value = data.location || "";
+          document.getElementById("university").value = data.university || "";
+          document.getElementById("email").value = data.email || "";
+          document.getElementById("googleScholar").value =
+            data.socialLinks.googleScholar || "";
+          document.getElementById("instagram").value =
+            data.socialLinks.instagram || "";
+          document.getElementById("linkedin").value =
+            data.socialLinks.linkedin || "";
+          document.getElementById("twitter").value =
+            data.socialLinks.twitter || "";
+          document.getElementById("github").value =
+            data.socialLinks.github || "";
+        } else if (jsonType === "courses") {
+          const completedCoursesContainer = document.getElementById(
+            "completedCourses-container"
+          );
+          completedCoursesContainer.innerHTML = "";
+          data.completedCourses.forEach((course) => {
+            const courseDiv = document.createElement("div");
+            courseDiv.className = "entry";
+            courseDiv.innerHTML = `
+            <input type="text" placeholder="Kurs Adı" class="course-name" value="${
+              course.name || ""
+            }">
+            <input type="text" placeholder="Platform" class="course-platform" value="${
+              course.platform || ""
+            }">
+            <input type="text" placeholder="Başlangıç Tarihi" class="course-startDate" value="${
+              course.startDate || ""
+            }">
+            <input type="text" placeholder="Bitiş Tarihi" class="course-endDate" value="${
+              course.endDate || ""
+            }">
+            <input type="text" placeholder="Sertifika URL" class="course-certificateUrl" value="${
+              course.certificateUrl || ""
+            }">
+            <button onclick="removeEntry(this)">Kaldır</button>
+          `;
+            completedCoursesContainer.appendChild(courseDiv);
+          });
+
+          const ongoingCoursesContainer = document.getElementById(
+            "ongoingCourses-container"
+          );
+          ongoingCoursesContainer.innerHTML = "";
+          data.ongoingCourses.forEach((course) => {
+            const courseDiv = document.createElement("div");
+            courseDiv.className = "entry";
+            courseDiv.innerHTML = `
+            <input type="text" placeholder="Kurs Adı" class="course-name" value="${
+              course.name || ""
+            }">
+            <input type="text" placeholder="Platform" class="course-platform" value="${
+              course.platform || ""
+            }">
+            <input type="text" placeholder="Başlangıç Tarihi" class="course-startDate" value="${
+              course.startDate || ""
+            }">
+            <input type="text" placeholder="Bitiş Tarihi" class="course-endDate" value="${
+              course.endDate || ""
+            }">
+            <input type="number" placeholder="Tamamlama Yüzdesi" class="course-completion" value="${
+              course.completion || ""
+            }">
+            <button onclick="removeEntry(this)">Kaldır</button>
+          `;
+            ongoingCoursesContainer.appendChild(courseDiv);
+          });
+        } else if (jsonType === "portfolio") {
+          document.getElementById("portfolioTitle").value = data.title || "";
+          document.getElementById("coverImage").value = data.coverImage || "";
+          document.getElementById("portfolioDescription").value =
+            data.description || "";
+          quill.root.innerHTML = data.htmlDescription || "";
+
+          const portfolioImagesContainer = document.getElementById(
+            "portfolioImages-container"
+          );
+          portfolioImagesContainer.innerHTML = "";
+          data.images.forEach((image) => {
+            const imageDiv = document.createElement("div");
+            imageDiv.className = "entry";
+            imageDiv.innerHTML = `
+            <input type="text" placeholder="Resim URL" class="portfolio-image" value="${
+              image || ""
+            }">
+            <button onclick="removeEntry(this)">Kaldır</button>
+          `;
+            portfolioImagesContainer.appendChild(imageDiv);
+          });
+        }
+      }
+
+      function addEducation() {
+        const container = document.getElementById("education-container");
+        const educationDiv = document.createElement("div");
+        educationDiv.className = "entry";
+        educationDiv.innerHTML = `
+        <input type="text" placeholder="Derece" class="education-degree">
+        <input type="text" placeholder="Kurum" class="education-institution">
+        <input type="text" placeholder="Başlangıç Yılı" class="education-startYear">
+        <input type="text" placeholder="Bitiş Yılı" class="education-endYear">
+        <input type="text" placeholder="Yetenekler (virgülle ayrılmış)" class="education-skills">
+        <button onclick="removeEntry(this)">Kaldır</button>
+      `;
+        container.appendChild(educationDiv);
+      }
+
+      function addWork() {
+        const container = document.getElementById("work-container");
+        const workDiv = document.createElement("div");
+        workDiv.className = "entry";
+        workDiv.innerHTML = `
+        <input type="text" placeholder="Pozisyon" class="work-position">
+        <input type="text" placeholder="Şirket" class="work-company">
+        <input type="text" placeholder="Başlangıç Tarihi" class="work-startDate">
+        <input type="text" placeholder="Bitiş Tarihi" class="work-endDate">
+        <input type="text" placeholder="Yetenekler (virgülle ayrılmış)" class="work-skills">
+        <button onclick="removeEntry(this)">Kaldır</button>
+      `;
+        container.appendChild(workDiv);
+      }
+
+      function addSkill() {
+        const container = document.getElementById("skills-container");
+        const skillDiv = document.createElement("div");
+        skillDiv.className = "entry";
+        skillDiv.innerHTML = `
+        <input type="text" placeholder="Yetenek Adı" class="skill-name">
+        <input type="number" placeholder="Yetenek Seviyesi" class="skill-level">
+        <select class="skill-category">
+          <option value="Yazılım Dilleri">Yazılım Dilleri</option>
+          <option value="Programlar">Programlar</option>
+          <option value="Diğer Yetenekler">Diğer Yetenekler</option>
+        </select>
+        <button onclick="removeEntry(this)">Kaldır</button>
+      `;
+        container.appendChild(skillDiv);
+      }
+
+      function addCompletedCourse() {
+        const container = document.getElementById("completedCourses-container");
+        const courseDiv = document.createElement("div");
+        courseDiv.className = "entry";
+        courseDiv.innerHTML = `
+        <input type="text" placeholder="Kurs Adı" class="course-name">
+        <input type="text" placeholder="Platform" class="course-platform">
+        <input type="text" placeholder="Başlangıç Tarihi" class="course-startDate">
+        <input type="text" placeholder="Bitiş Tarihi" class="course-endDate">
+        <input type="text" placeholder="Sertifika URL" class="course-certificateUrl">
+        <button onclick="removeEntry(this)">Kaldır</button>
+      `;
+        container.appendChild(courseDiv);
+      }
+
+      function addOngoingCourse() {
+        const container = document.getElementById("ongoingCourses-container");
+        const courseDiv = document.createElement("div");
+        courseDiv.className = "entry";
+        courseDiv.innerHTML = `
+        <input type="text" placeholder="Kurs Adı" class="course-name">
+        <input type="text" placeholder="Platform" class="course-platform">
+        <input type="text" placeholder="Başlangıç Tarihi" class="course-startDate">
+        <input type="text" placeholder="Bitiş Tarihi" class="course-endDate">
+        <input type="number" placeholder="Tamamlama Yüzdesi" class="course-completion">
+        <button onclick="removeEntry(this)">Kaldır</button>
+      `;
+        container.appendChild(courseDiv);
+      }
+
+      function addPortfolioImage() {
+        const container = document.getElementById("portfolioImages-container");
+        const imageDiv = document.createElement("div");
+        imageDiv.className = "entry";
+        imageDiv.innerHTML = `
+        <input type="text" placeholder="Resim URL" class="portfolio-image">
+        <button onclick="removeEntry(this)">Kaldır</button>
+      `;
+        container.appendChild(imageDiv);
+      }
+
+      function removeEntry(button) {
+        button.parentElement.remove();
+      }
+
+      function generateJSON() {
+        const jsonType = document.getElementById("jsonTypeSelect").value;
+
+        if (jsonType === "resume") {
+          const bio = document.getElementById("bio").value || null;
+
+          const educationContainer = document.getElementById(
+            "education-container"
+          );
+          const educationItems = educationContainer.querySelectorAll(".entry");
+          const education = [];
+          educationItems.forEach((item) => {
+            const degree =
+              item.querySelector(".education-degree").value || null;
+            const institution =
+              item.querySelector(".education-institution").value || null;
+            const startYear =
+              item.querySelector(".education-startYear").value || null;
+            const endYear =
+              item.querySelector(".education-endYear").value || null;
+            const skills = item.querySelector(".education-skills").value
+              ? item
+                  .querySelector(".education-skills")
+                  .value.split(",")
+                  .map((skill) => skill.trim())
+              : null;
+            education.push({ degree, institution, startYear, endYear, skills });
+          });
+
+          const workContainer = document.getElementById("work-container");
+          const workItems = workContainer.querySelectorAll(".entry");
+          const workExperience = [];
+          workItems.forEach((item) => {
+            const position = item.querySelector(".work-position").value || null;
+            const company = item.querySelector(".work-company").value || null;
+            const startDate =
+              item.querySelector(".work-startDate").value || null;
+            const endDate = item.querySelector(".work-endDate").value || null;
+            const skills = item.querySelector(".work-skills").value
+              ? item
+                  .querySelector(".work-skills")
+                  .value.split(",")
+                  .map((skill) => skill.trim())
+              : null;
+            workExperience.push({
+              position,
+              company,
+              startDate,
+              endDate,
+              skills,
+            });
+          });
+
+          const skillsContainer = document.getElementById("skills-container");
+          const skillItems = skillsContainer.querySelectorAll(".entry");
+          const skills = {
+            "Yazılım Dilleri": [],
+            Programlar: [],
+            "Diğer Yetenekler": [],
+          };
+          skillItems.forEach((item) => {
+            const name = item.querySelector(".skill-name").value || null;
+            const level = item.querySelector(".skill-level").value || null;
+            const category = item.querySelector(".skill-category").value;
+            skills[category].push({ name, level });
+          });
+
+          const output = {
+            bio,
+            education,
+            workExperience,
+            skills,
+          };
+
+          document.getElementById("output").value = JSON.stringify(
+            output,
+            null,
+            2
+          );
+        } else if (jsonType === "my-info") {
+          const profilePicture =
+            document.getElementById("profilePicture").value || null;
+          const name = document.getElementById("name").value || null;
+          const about = document.getElementById("about").value || null;
+          const location = document.getElementById("location").value || null;
+          const university =
+            document.getElementById("university").value || null;
+          const email = document.getElementById("email").value || null;
+          const socialLinks = {
+            googleScholar:
+              document.getElementById("googleScholar").value || null,
+            instagram: document.getElementById("instagram").value || null,
+            linkedin: document.getElementById("linkedin").value || null,
+            twitter: document.getElementById("twitter").value || null,
+            github: document.getElementById("github").value || null,
+          };
+
+          const output = {
+            profilePicture,
+            name,
+            about,
+            location,
+            university,
+            email,
+            socialLinks,
+          };
+
+          document.getElementById("output").value = JSON.stringify(
+            output,
+            null,
+            2
+          );
+        } else if (jsonType === "courses") {
+          const completedCoursesContainer = document.getElementById(
+            "completedCourses-container"
+          );
+          const completedCoursesItems =
+            completedCoursesContainer.querySelectorAll(".entry");
+          const completedCourses = [];
+          completedCoursesItems.forEach((item) => {
+            const name = item.querySelector(".course-name").value || null;
+            const platform =
+              item.querySelector(".course-platform").value || null;
+            const startDate =
+              item.querySelector(".course-startDate").value || null;
+            const endDate = item.querySelector(".course-endDate").value || null;
+            const certificateUrl =
+              item.querySelector(".course-certificateUrl").value || null;
+            completedCourses.push({
+              name,
+              platform,
+              startDate,
+              endDate,
+              certificateUrl,
+            });
+          });
+
+          const ongoingCoursesContainer = document.getElementById(
+            "ongoingCourses-container"
+          );
+          const ongoingCoursesItems =
+            ongoingCoursesContainer.querySelectorAll(".entry");
+          const ongoingCourses = [];
+          ongoingCoursesItems.forEach((item) => {
+            const name = item.querySelector(".course-name").value || null;
+            const platform =
+              item.querySelector(".course-platform").value || null;
+            const startDate =
+              item.querySelector(".course-startDate").value || null;
+            const endDate = item.querySelector(".course-endDate").value || null;
+            const completion =
+              item.querySelector(".course-completion").value || null;
+            ongoingCourses.push({
+              name,
+              platform,
+              startDate,
+              endDate,
+              completion,
+            });
+          });
+
+          const output = {
+            completedCourses,
+            ongoingCourses,
+          };
+
+          document.getElementById("output").value = JSON.stringify(
+            output,
+            null,
+            2
+          );
+        } else if (jsonType === "portfolio") {
+          const title = document.getElementById("portfolioTitle").value || null;
+          const coverImage =
+            document.getElementById("coverImage").value || null;
+          const description =
+            document.getElementById("portfolioDescription").value || null;
+          const htmlDescription = quill.root.innerHTML || null;
+
+          const portfolioImagesContainer = document.getElementById(
+            "portfolioImages-container"
+          );
+          const portfolioImagesItems =
+            portfolioImagesContainer.querySelectorAll(".entry");
+          const images = [];
+          portfolioImagesItems.forEach((item) => {
+            const image = item.querySelector(".portfolio-image").value || null;
+            images.push(image);
+          });
+
+          const output = {
+            title,
+            coverImage,
+            description,
+            htmlDescription,
+            images,
+          };
+
+          document.getElementById("output").value = JSON.stringify(
+            output,
+            null,
+            2
+          );
+        }
+      }
+
+      document
+        .getElementById("jsonTypeSelect")
+        .dispatchEvent(new Event("change"));
+
+      var quill = new Quill("#portfolioHtmlDescription", {
+        theme: "snow",
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "title": "poodo 1",
+  "coverImage": "https://via.placeholder.com/256",
+  "description": "Description of project 1.",
+  "images": [
+    "https://via.placeholder.com/600",
+    "https://via.placeholder.com/600",
+    "https://via.placeholder.com/600"
+  ],
+  "htmlDescription": "<h2>Project 1</h2><p>This is a detailed description of Project 1. It includes various features and highlights of the project.</p><ul><li>Feature 1</li><li>Feature 2</li><li>Feature 3</li></ul>"
+}

@@ -1,0 +1,15 @@
+{
+  "profilePicture": "https://via.placeholder.com/150",
+  "name": "Atakan Karaçengel",
+  "about": "Elektrik ve bilgisayar mühendisliği öğrencisiyim. PROMETEON TYRE GROUP'ta akıllı üretim alanında staj yapıyorum. PostgreSQL, ASP.NET MVC ve C# konularında bilgi sahibiyim. Kocaeli Üniversitesi'nde elektrik ve bilgisayar mühendisliği lisans derecesi almaktayım.",
+  "location": "Kocaeli, Türkiye",
+  "university": "Kocaeli Üniversitesi",
+  "email": "atakankaracengel0@gmail.com",
+  "socialLinks": {
+    "googleScholar": "https://scholar.google.com",
+    "instagram": "https://instagram.com",
+    "linkedin": "https://linkedin.com/in/atakankaracengel/",
+    "twitter": "https://twitter.com",
+    "github": "https://github.com"
+  }
+}

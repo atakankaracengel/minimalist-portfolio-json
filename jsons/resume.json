@@ -1,0 +1,48 @@
+{
+  "bio": "Kocaeli Üniversitesi'nde elektrik ve bilgisayar mühendisliği okuyorum. Şu anda PROMETEON TYRE GROUP'ta akıllı üretim üzerine staj yapıyorum ve gelecekte bu alanda çalışmayı hedefliyorum. Python, C#, PostgreSQL ve OpenCV gibi teknolojilerle ilgileniyorum. Kendimi sürekli geliştirmeyi seviyorum ve yeni şeyler öğrenmeye açığım.",
+  "education": [
+    {
+      "degree": "Bilgisayar Mühendisliği",
+      "institution": "Kocaeli Üniversitesi",
+      "startYear": "2021",
+      "endYear": null,
+      "skills": ["C", "Veri Yapıları"]
+    },
+    {
+      "degree": "Elektrik Mühendisliği",
+      "institution": "Kocaeli Üniversitesi",
+      "startYear": "2020",
+      "endYear": null,
+      "skills": ["C", "Elektrik Devreleri", "Yenilenebilir Enerji"]
+    }
+  ],
+  "workExperience": [
+    {
+      "position": "Akıllı Üretim Stajyeri",
+      "company": "PROMETEON TYRE GROUP",
+      "startDate": "10.06.2024",
+      "endDate": null,
+      "skills": ["C#", "PostgreSQL"]
+    }
+  ],
+  "skills": {
+    "Yazılım Dilleri": [
+      { "name": "Python", "level": 80 },
+      { "name": "JavaScript", "level": 70 },
+      { "name": "C", "level": 80 },
+      { "name": "C#", "level": 60 }
+    ],
+    "Programlar": [
+      { "name": "Grafana", "level": 40 },
+      { "name": "LTspice", "level": 60 },
+      { "name": "SolidWorks", "level": 70 },
+      { "name": "SimulIDE", "level": 70 }
+    ],
+    "Diğer Yetenekler": [
+      { "name": "PostgreSQL", "level": 50 },
+      { "name": "OpenCV", "level": 60 },
+      { "name": "Machine Learning", "level": 70 },
+      { "name": "Deep Learning", "level": 65 }
+    ]
+  }
+}
